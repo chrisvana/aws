@@ -1,0 +1,10 @@
+[
+{ "py_library": {
+    "name": "bootstrap",
+    "py_sources": [ "bootstrap.py" ],
+} },
+{ "py_library": {
+    "name": "spot",
+    "py_sources": [ "spot.py" ],
+} }
+]
