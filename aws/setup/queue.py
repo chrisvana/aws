@@ -25,6 +25,7 @@ class QueueClient(BaseClient):
         self.queue = self.sqs_conn.create_queue(self.queue_name, 120)
 
     def DeleteItem(self, item):
+        print 'Deleting queue: %s' % self.queue_name
         self.sqs_conn.delete_queue(item)
 
 class QueueSet:
