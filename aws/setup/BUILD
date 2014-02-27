@@ -9,6 +9,12 @@
     "system_dependencies": [ "boto" ]
 } },
 { "py_library": {
+    "name": "spot",
+    "py_sources": [ "spot.py" ],
+    "dependencies": [ "//aws/config:spot" ],
+    "system_dependencies": [ "boto" ]
+} },
+{ "py_library": {
     "name": "autoscale",
     "py_sources": [ "autoscale.py" ],
     "dependencies": [ ":base",

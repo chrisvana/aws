@@ -43,7 +43,7 @@ class QueueLengthAlarm:
             namespace='AWS/SQS',
             metric='ApproximateNumberOfMessagesVisible',
             statistic='Sum',
-            comparison='>',
+            comparison='>=',
             threshold='1',
             period=self.period,
             evaluation_periods=self.evaluation_periods,

@@ -6,6 +6,7 @@ import aws.config.workqueue
 from aws.setup.queue import QueueSet
 from aws.setup.autoscale import AutoScaleClient
 from aws.setup.alarm import AlarmSet
+import aws.setup.spot
 
 class SetupClient:
     def __init__(self, config):
@@ -13,7 +14,18 @@ class SetupClient:
         if not self.config.IsValid():
             raise 'Invalid config.'
         self.sqs = QueueSet(config.Instance(), config.Region())
-        self.scale = AutoScaleClient(config.Instance(), config)
+        self.ec2_conn = boto.ec2.connect_to_region(region_name=config.Region())
+        self.price_history = aws.setup.spot.GetPriceInfo(self.ec2_conn)
+        chosen = None
+        for p in self.price_history:
+            if config.spot.IsOkArchPrice(p.arch, p.last):
+                chosen = p
+                break
+        if chosen is None:
+            raise 'Could not find good architecture fit.'
+        else:
+            config.spot.instance_type = chosen.arch
+        self.scale = AutoScaleClient(config.Instance(), config, [chosen.zone])
         self.alarms = None
 
     def TearDown(self):

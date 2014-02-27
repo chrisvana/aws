@@ -44,14 +44,14 @@ class LaunchConfig(BaseClient):
         item.delete()
 
 class AutoScaleClient(BaseClient):
-    def __init__(self, name, config):
+    def __init__(self, name, config, zones):
         self.input_config = config
         self.name = name + "-auto"
         self.instance = name
         region = config.Region()
         self.autoscale_conn = boto.ec2.autoscale.connect_to_region(region)
         self.ec2_conn = boto.ec2.connect_to_region(region_name=region)
-        self.zones = [ z.name for z in self.ec2_conn.get_all_zones() ]
+        self.zones = zones
         self.autoscale = None
         self.scale_up_policy = None
         self.scale_down_policy = None

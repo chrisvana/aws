@@ -21,6 +21,7 @@ flags.d.DEFINE_string('execute_script', '', 'Execution script.')
 
 def ProcessMessage(message, input_file, output_file, script):
     input_file.write(message.get_body())
+    input_file.flush()
     return subprocess.call(script, shell=True) == 0
 
 def WriteOutput(output_f, output_queue):

@@ -25,12 +25,14 @@ workqueue_config = """
   },
   "spot": {
     "bid_price": 0.1,
+    "core_bid_price": 0.01,
     "max_nodes": 1,
     "ami": "ami-1d132274",
     "region": "us-east-1"
   }
 }
 """
+
 
 if __name__ == '__main__':
     sys.argv = FLAGS(sys.argv)  # parse flags
