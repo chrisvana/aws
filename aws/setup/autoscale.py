@@ -156,13 +156,14 @@ class AutoScaleClient(BaseClient):
         super(AutoScaleClient, self).FindOrNew()
 
     def TearDown(self):
-        self.scale_up_policy = None
-        self.scale_down_policy = None
         super(AutoScaleClient, self).TearDown()
         self.launch_config.TearDown()  # happens afterwards
 
     def DeleteItem(self, item):
         print 'Deleting AutoScalingGroup %s' % self.name
+        self.scale_up_policy.delete()
+        self.scale_down_policy.delete()
+        # TODO, delete spot instances running.
         item.shutdown_instances()
         item.delete()
 

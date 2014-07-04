@@ -47,7 +47,7 @@ if __name__ == '__main__':
     script = FLAGS.execute_script
     script = script.replace('{INPUT}', input_f.name)
     script = script.replace('{OUTPUT}', output_f.name)
- 
+
     # SQS connection
     sqs_conn = boto.connect_sqs()
     input_queue = sqs_conn.get_queue(FLAGS.input_queue)
